@@ -1,4 +1,4 @@
-﻿using ParagonApi;
+using ParagonApi;
 using ParagonApi.Models;
 
 namespace LayoutConsoleApp;
@@ -32,7 +32,7 @@ public class Program
         );
 
         Console.WriteLine("Upgrading and analyzing trusses...");
-        Console.WriteLine("");
+        Console.WriteLine();
 
         var trussGuids = trussEnvelopes
             .Select(trussEnvelope => trussEnvelope.ComponentDesignGuid)
@@ -43,14 +43,13 @@ public class Program
         foreach (var trussGuid in trussGuids)
         {
             var truss = await connection.Trusses.Find(trussGuid);
-            // TODO Error handling?
             var analysisSetGuid = await connection.Trusses.UpgradeAndAnalyze(trussGuid);
 
             var analysisSet = await connection.AnalysisSets.Get(analysisSetGuid);
             Console.WriteLine($"Truss {truss.Name} Capacity Ratio: {analysisSet.CapacityRatio}");
         }
 
-        Console.WriteLine("");
+        Console.WriteLine();
         Console.WriteLine($"Project URL: https://developdesign.paragontruss.com/{project.Guid}");
         Console.WriteLine();
     }
@@ -114,7 +113,7 @@ public class Program
         var trussEnvelopes = new List<TrussEnvelope>();
         var trussEnvelopeNumber = 1;
 
-        var girderOffset = 7 * 12;
+        var girderOffset = 7 * Feet;
         var westGirder = await connection.Layouts.CreateTrussEnvelope(
             projectGuid,
             CreateNewTrussEnvelope(
@@ -138,9 +137,9 @@ public class Program
         trussEnvelopes.Add(eastGirder);
 
         for (
-            var trussOffset = girderOffset + 2 * 12;
+            var trussOffset = girderOffset + 2 * Feet;
             trussOffset < BuildingLength - girderOffset;
-            trussOffset += 2 * 12
+            trussOffset += 2 * Feet
         )
         {
             var common = await connection.Layouts.CreateTrussEnvelope(
@@ -178,9 +177,9 @@ public class Program
         trussEnvelopes.Add(northwestEndJack);
 
         for (
-            var trussOffset = girderOffset + 2 * 12;
-            trussOffset <= Span - girderOffset - 2 * 12;
-            trussOffset += 2 * 12
+            var trussOffset = girderOffset + 2 * Feet;
+            trussOffset <= Span - girderOffset - 2 * Feet;
+            trussOffset += 2 * Feet
         )
         {
             var endJack = await connection.Layouts.CreateTrussEnvelope(
@@ -218,9 +217,9 @@ public class Program
         trussEnvelopes.Add(northeastEndJack);
 
         for (
-            var trussOffset = girderOffset + 2 * 12;
-            trussOffset <= Span - girderOffset - 2 * 12;
-            trussOffset += 2 * 12
+            var trussOffset = girderOffset + 2 * Feet;
+            trussOffset <= Span - girderOffset - 2 * Feet;
+            trussOffset += 2 * Feet
         )
         {
             var endJack = await connection.Layouts.CreateTrussEnvelope(
@@ -303,8 +302,8 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = -OverhangDistance, Y = girderOffset - 2 * 12 },
-                rightPoint: new Point2D { X = girderOffset - 2 * 12 - cornerJackOffset, Y = girderOffset - 2 * 12 },
+                leftPoint: new Point2D { X = -OverhangDistance, Y = girderOffset - 2 * Feet },
+                rightPoint: new Point2D { X = girderOffset - 2 * Feet - cornerJackOffset, Y = girderOffset - 2 * Feet },
                 Justification.Front,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
             )
@@ -315,8 +314,8 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = -OverhangDistance, Y = girderOffset - 4 * 12 },
-                rightPoint: new Point2D { X = girderOffset - 4 * 12 - cornerJackOffset, Y = girderOffset - 4 * 12 },
+                leftPoint: new Point2D { X = -OverhangDistance, Y = girderOffset - 4 * Feet },
+                rightPoint: new Point2D { X = girderOffset - 4 * Feet - cornerJackOffset, Y = girderOffset - 4 * Feet },
                 Justification.Front,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
             )
@@ -327,8 +326,8 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = girderOffset - 2 * 12, Y = -OverhangDistance },
-                rightPoint: new Point2D { X = girderOffset - 2 * 12, Y = girderOffset - 2 * 12 - cornerJackOffset },
+                leftPoint: new Point2D { X = girderOffset - 2 * Feet, Y = -OverhangDistance },
+                rightPoint: new Point2D { X = girderOffset - 2 * Feet, Y = girderOffset - 2 * Feet - cornerJackOffset },
                 Justification.Back,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
             )
@@ -339,8 +338,8 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = girderOffset - 4 * 12, Y = -OverhangDistance },
-                rightPoint: new Point2D { X = girderOffset - 4 * 12, Y = girderOffset - 4 * 12 - cornerJackOffset },
+                leftPoint: new Point2D { X = girderOffset - 4 * Feet, Y = -OverhangDistance },
+                rightPoint: new Point2D { X = girderOffset - 4 * Feet, Y = girderOffset - 4 * Feet - cornerJackOffset },
                 Justification.Back,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
             )
@@ -351,11 +350,11 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = -OverhangDistance, Y = Span - girderOffset + 2 * 12 },
+                leftPoint: new Point2D { X = -OverhangDistance, Y = Span - girderOffset + 2 * Feet },
                 rightPoint: new Point2D
                 {
-                    X = girderOffset - 2 * 12 - cornerJackOffset,
-                    Y = Span - girderOffset + 2 * 12,
+                    X = girderOffset - 2 * Feet - cornerJackOffset,
+                    Y = Span - girderOffset + 2 * Feet,
                 },
                 Justification.Back,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
@@ -367,11 +366,11 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = -OverhangDistance, Y = Span - girderOffset + 4 * 12 },
+                leftPoint: new Point2D { X = -OverhangDistance, Y = Span - girderOffset + 4 * Feet },
                 rightPoint: new Point2D
                 {
-                    X = girderOffset - 4 * 12 - cornerJackOffset,
-                    Y = Span - girderOffset + 4 * 12,
+                    X = girderOffset - 4 * Feet - cornerJackOffset,
+                    Y = Span - girderOffset + 4 * Feet,
                 },
                 Justification.Back,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
@@ -383,11 +382,11 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = girderOffset - 2 * 12, Y = Span + OverhangDistance },
+                leftPoint: new Point2D { X = girderOffset - 2 * Feet, Y = Span + OverhangDistance },
                 rightPoint: new Point2D
                 {
-                    X = girderOffset - 2 * 12,
-                    Y = Span - girderOffset + 2 * 12 + cornerJackOffset,
+                    X = girderOffset - 2 * Feet,
+                    Y = Span - girderOffset + 2 * Feet + cornerJackOffset,
                 },
                 Justification.Front,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
@@ -399,11 +398,11 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = girderOffset - 4 * 12, Y = Span + OverhangDistance },
+                leftPoint: new Point2D { X = girderOffset - 4 * Feet, Y = Span + OverhangDistance },
                 rightPoint: new Point2D
                 {
-                    X = girderOffset - 4 * 12,
-                    Y = Span - girderOffset + 4 * 12 + cornerJackOffset,
+                    X = girderOffset - 4 * Feet,
+                    Y = Span - girderOffset + 4 * Feet + cornerJackOffset,
                 },
                 Justification.Front,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
@@ -415,11 +414,11 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = BuildingLength + OverhangDistance, Y = girderOffset - 2 * 12 },
+                leftPoint: new Point2D { X = BuildingLength + OverhangDistance, Y = girderOffset - 2 * Feet },
                 rightPoint: new Point2D
                 {
-                    X = BuildingLength - girderOffset + 2 * 12 + cornerJackOffset,
-                    Y = girderOffset - 2 * 12,
+                    X = BuildingLength - girderOffset + 2 * Feet + cornerJackOffset,
+                    Y = girderOffset - 2 * Feet,
                 },
                 Justification.Back,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
@@ -431,11 +430,11 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = BuildingLength + OverhangDistance, Y = girderOffset - 4 * 12 },
+                leftPoint: new Point2D { X = BuildingLength + OverhangDistance, Y = girderOffset - 4 * Feet },
                 rightPoint: new Point2D
                 {
-                    X = BuildingLength - girderOffset + 4 * 12 + cornerJackOffset,
-                    Y = girderOffset - 4 * 12,
+                    X = BuildingLength - girderOffset + 4 * Feet + cornerJackOffset,
+                    Y = girderOffset - 4 * Feet,
                 },
                 Justification.Back,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
@@ -447,11 +446,11 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = BuildingLength - girderOffset + 2 * 12, Y = -OverhangDistance },
+                leftPoint: new Point2D { X = BuildingLength - girderOffset + 2 * Feet, Y = -OverhangDistance },
                 rightPoint: new Point2D
                 {
-                    X = BuildingLength - girderOffset + 2 * 12,
-                    Y = girderOffset - 2 * 12 - cornerJackOffset,
+                    X = BuildingLength - girderOffset + 2 * Feet,
+                    Y = girderOffset - 2 * Feet - cornerJackOffset,
                 },
                 Justification.Front,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
@@ -463,11 +462,11 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = BuildingLength - girderOffset + 4 * 12, Y = -OverhangDistance },
+                leftPoint: new Point2D { X = BuildingLength - girderOffset + 4 * Feet, Y = -OverhangDistance },
                 rightPoint: new Point2D
                 {
-                    X = BuildingLength - girderOffset + 4 * 12,
-                    Y = girderOffset - 4 * 12 - cornerJackOffset,
+                    X = BuildingLength - girderOffset + 4 * Feet,
+                    Y = girderOffset - 4 * Feet - cornerJackOffset,
                 },
                 Justification.Front,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
@@ -479,11 +478,11 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = BuildingLength + OverhangDistance, Y = Span - girderOffset + 2 * 12 },
+                leftPoint: new Point2D { X = BuildingLength + OverhangDistance, Y = Span - girderOffset + 2 * Feet },
                 rightPoint: new Point2D
                 {
-                    X = BuildingLength - girderOffset + 2 * 12 + cornerJackOffset,
-                    Y = Span - girderOffset + 2 * 12,
+                    X = BuildingLength - girderOffset + 2 * Feet + cornerJackOffset,
+                    Y = Span - girderOffset + 2 * Feet,
                 },
                 Justification.Front,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
@@ -495,11 +494,11 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = BuildingLength + OverhangDistance, Y = Span - girderOffset + 4 * 12 },
+                leftPoint: new Point2D { X = BuildingLength + OverhangDistance, Y = Span - girderOffset + 4 * Feet },
                 rightPoint: new Point2D
                 {
-                    X = BuildingLength - girderOffset + 4 * 12 + cornerJackOffset,
-                    Y = Span - girderOffset + 4 * 12,
+                    X = BuildingLength - girderOffset + 4 * Feet + cornerJackOffset,
+                    Y = Span - girderOffset + 4 * Feet,
                 },
                 Justification.Front,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
@@ -511,11 +510,11 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = BuildingLength - girderOffset + 2 * 12, Y = Span + OverhangDistance },
+                leftPoint: new Point2D { X = BuildingLength - girderOffset + 2 * Feet, Y = Span + OverhangDistance },
                 rightPoint: new Point2D
                 {
-                    X = BuildingLength - girderOffset + 2 * 12,
-                    Y = Span - girderOffset + 2 * 12 + cornerJackOffset,
+                    X = BuildingLength - girderOffset + 2 * Feet,
+                    Y = Span - girderOffset + 2 * Feet + cornerJackOffset,
                 },
                 Justification.Back,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
@@ -527,11 +526,11 @@ public class Program
             projectGuid,
             CreateNewTrussEnvelope(
                 name: $"{trussEnvelopeNumber++}",
-                leftPoint: new Point2D { X = BuildingLength - girderOffset + 4 * 12, Y = Span + OverhangDistance },
+                leftPoint: new Point2D { X = BuildingLength - girderOffset + 4 * Feet, Y = Span + OverhangDistance },
                 rightPoint: new Point2D
                 {
-                    X = BuildingLength - girderOffset + 4 * 12,
-                    Y = Span - girderOffset + 4 * 12 + cornerJackOffset,
+                    X = BuildingLength - girderOffset + 4 * Feet,
+                    Y = Span - girderOffset + 4 * Feet + cornerJackOffset,
                 },
                 Justification.Back,
                 rightBevelCut: new BevelCut { Type = BevelCutType.Double, Angle = 45 }
@@ -549,7 +548,7 @@ public class Program
             LeftPoint = leftPoint,
             RightPoint = rightPoint,
             Thickness = 3.5,
-            Top = 8 * 12,
+            Top = 8 * Feet,
             Bottom = 0,
             Justification = Justification.Front,
         };
