@@ -50,7 +50,7 @@ public class Program
         }
 
         Console.WriteLine();
-        Console.WriteLine($"Project URL: https://developdesign.paragontruss.com/{project.Guid}");
+        Console.WriteLine($"Project URL: https://design.paragontruss.com/{project.Guid}");
         Console.WriteLine();
     }
 
