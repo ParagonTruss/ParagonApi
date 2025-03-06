@@ -6,7 +6,7 @@ ParagonApi is a client library targeting .NET Standard 2.0 and above that provid
 
 ## Usage examples
 
-View sample app at https://github.com/ParagonTruss/ParagonApi/tree/main/samples/LayoutConsoleApp
+View sample .NET apps at https://github.com/ParagonTruss/ParagonApiDotnetSamples
 
 ## Supported Platforms
 
