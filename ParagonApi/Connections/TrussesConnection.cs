@@ -66,4 +66,16 @@ public class TrussesConnection
 
         return Serialization.Deserialize<Guid>(responseContent);
     }
+
+    public async Task<Truss> CreateProfileTruss(Guid projectGuid, Profile profile)
+    {
+        var requestBody = Serialization.Serialize(profile);
+        var requestContent = new StringContent(requestBody, Encoding.UTF8, "application/json");
+        var response = await Client.PostAsync($"api/public/projects/{projectGuid}/createProfileTruss", requestContent);
+
+        var responseContent = await response.Content.ReadAsStringAsync();
+        response.EnsureSuccessStatusCode();
+
+        return Serialization.Deserialize<Truss>(responseContent);
+    }
 }

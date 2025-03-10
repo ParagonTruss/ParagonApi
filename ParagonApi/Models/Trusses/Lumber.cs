@@ -4,7 +4,7 @@ namespace ParagonApi.Models;
 
 public enum LumberStructure
 {
-    Swan = 0,
+    Sawn = 0,
     StructuralComposite = 1,
 }
 
