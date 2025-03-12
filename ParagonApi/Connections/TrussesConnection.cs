@@ -47,24 +47,24 @@ public class TrussesConnection
         return trussResults;
     }
 
-    public async Task<Guid> Analyze(Guid guid)
+    public async Task<AnalysisSet> Analyze(Guid guid)
     {
         var response = await Client.PostAsync($"/api/public/trusses/{guid}/analyze", null);
 
         var responseContent = await response.Content.ReadAsStringAsync();
         response.EnsureSuccessStatusCode();
 
-        return Serialization.Deserialize<Guid>(responseContent);
+        return Serialization.Deserialize<AnalysisSet>(responseContent);
     }
 
-    public async Task<Guid> UpgradeAndAnalyze(Guid guid)
+    public async Task<AnalysisSet> UpgradeAndAnalyze(Guid guid)
     {
         var response = await Client.PostAsync($"/api/public/trusses/{guid}/upgradeAndAnalyze", null);
 
         var responseContent = await response.Content.ReadAsStringAsync();
         response.EnsureSuccessStatusCode();
 
-        return Serialization.Deserialize<Guid>(responseContent);
+        return Serialization.Deserialize<AnalysisSet>(responseContent);
     }
 
     public async Task<Truss> CreateProfileTruss(Guid projectGuid, Profile profile)
