@@ -1,8 +1,6 @@
-// ReSharper disable UnusedAutoPropertyAccessor.Global
+﻿namespace ParagonApi.Models;
 
-namespace ParagonApi.Models;
-
-public class Point2D
+public class Point3D
 {
     /// <summary>
     /// The X-coordinate, in inches.
@@ -13,4 +11,9 @@ public class Point2D
     /// The Y-coordinate, in inches.
     /// </summary>
     public required double Y { get; set; }
+
+    /// <summary>
+    /// The Z-coordinate, in inches.
+    /// </summary>
+    public required double Z { get; set; }
 }

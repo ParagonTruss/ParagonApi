@@ -42,6 +42,17 @@ public class LayoutsConnection
         return Serialization.Deserialize<RoofPlane>(responseContent);
     }
 
+    public async Task<RoofContainer> CreateRoofContainer(Guid projectGuid, NewRoofContainer roofContainer)
+    {
+        var requestBody = Serialization.Serialize(roofContainer);
+        var requestContent = new StringContent(requestBody, Encoding.UTF8, "application/json");
+        var response = await Client.PostAsync($"api/public/projects/{projectGuid}/roofContainers", requestContent);
+        response.EnsureSuccessStatusCode();
+
+        var responseContent = await response.Content.ReadAsStringAsync();
+        return Serialization.Deserialize<RoofContainer>(responseContent);
+    }
+
     public async Task<TrussEnvelope> CreateTrussEnvelope(Guid projectGuid, NewTrussEnvelope trussEnvelope)
     {
         var requestBody = Serialization.Serialize(trussEnvelope);

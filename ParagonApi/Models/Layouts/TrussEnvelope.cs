@@ -9,6 +9,7 @@ public class NewTrussEnvelope
     public required double Thickness { get; set; }
     public BevelCut? LeftBevelCut { get; set; }
     public BevelCut? RightBevelCut { get; set; }
+    public Guid? RoofContainerGuid { get; set; }
 }
 
 public class TrussEnvelope : NewTrussEnvelope
