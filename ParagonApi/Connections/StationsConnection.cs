@@ -1,22 +1,10 @@
 namespace ParagonApi.Connections;
 
-public class StationsConnection
+public class StationsConnection(HttpClient designServiceClient)
 {
-    private HttpClient Client { get; }
+    private HttpClient Client { get; } = designServiceClient;
 
-    public StationsConnection(HttpClient designServiceClient)
-    {
-        Client = designServiceClient;
-    }
-
-    public async Task<List<Station>> FindAll()
-    {
-        var response = await Client.GetAsync("/api/public/stations/");
-        response.EnsureSuccessStatusCode();
-
-        var responseContent = await response.Content.ReadAsStringAsync();
-        return Serialization.Deserialize<List<Station>>(responseContent);
-    }
+    public Task<List<Station>> FindAll() => Client.Get<List<Station>>("/api/public/stations/");
 
     public async Task<bool> Exists(Guid stationGuid)
     {
@@ -88,35 +76,18 @@ public class StationsConnection
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task UploadCountFile(Guid stationGuid, BinaryUploadFile file)
-    {
-        var url = $"/api/public/stations/{stationGuid}/countFile";
-        var requestBody = Serialization.Serialize(file.ToBase64File());
-        var requestContent = new StringContent(requestBody, Encoding.UTF8, "application/json");
+    public Task UploadCountFile(Guid stationGuid, BinaryUploadFile file) =>
+        Client.Put($"/api/public/stations/{stationGuid}/countFile", file.ToBase64File());
 
-        var response = await Client.PutAsync(url, requestContent);
-        response.EnsureSuccessStatusCode();
-    }
+    public Task OrderStationComponentDesigns(Guid stationGuid, List<Guid> orderedStationComponentDesigns) =>
+        Client.Put(
+            $"/api/public/stations/{stationGuid}/order",
+            new OrderStationComponentDesignRequest { OrderedStationComponentDesigns = orderedStationComponentDesigns }
+        );
 
-    public async Task OrderStationComponentDesigns(Guid stationGuid, List<Guid> orderedStationComponentDesigns)
-    {
-        var url = $"/api/public/stations/{stationGuid}/order";
-        var requestBody = Serialization.Serialize(new { orderedStationComponentDesigns });
-        var requestContent = new StringContent(requestBody, Encoding.UTF8, "application/json");
+    public Task Clear(Guid stationGuid) => Client.Delete($"/api/public/stations/{stationGuid}/componentDesigns/");
 
-        var response = await Client.PutAsync(url, requestContent);
-        response.EnsureSuccessStatusCode();
-    }
-
-    public async Task Clear(Guid stationGuid)
-    {
-        var url = $"/api/public/stations/{stationGuid}/componentDesigns/";
-        var response = await Client.DeleteAsync(url);
-
-        response.EnsureSuccessStatusCode();
-    }
-
-    public async Task SetCurrentProductionComponentInstanceGuid(
+    public Task SetCurrentProductionComponentInstanceGuid(
         Guid stationGuid,
         Guid? newProductionComponentInstanceGuid,
         ProductionComponentInstanceStatus? newStatus
@@ -128,8 +99,7 @@ public class StationsConnection
             : "";
         var url =
             $"/api/public/stations/{stationGuid}/setCurrentProductionComponentInstanceGuid/{newProductionComponentInstanceGuidParameter}{queryParameters}";
-        var response = await Client.SendAsync(new HttpRequestMessage(new HttpMethod("PATCH"), url));
 
-        response.EnsureSuccessStatusCode();
+        return Client.Patch(url);
     }
 }

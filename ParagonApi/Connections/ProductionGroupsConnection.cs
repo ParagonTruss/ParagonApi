@@ -1,37 +1,13 @@
 namespace ParagonApi.Connections;
 
-public class ProductionGroupsConnection
+public class ProductionGroupsConnection(HttpClient designServiceClient)
 {
-    private HttpClient Client { get; }
+    private HttpClient Client { get; } = designServiceClient;
 
-    public ProductionGroupsConnection(HttpClient designServiceClient)
-    {
-        Client = designServiceClient;
-    }
+    public Task<ProductionGroup> Find(Guid guid) => Client.Get<ProductionGroup>($"api/public/productionGroups/{guid}");
 
-    public async Task<ProductionGroup> Find(Guid guid)
-    {
-        var response = await Client.GetAsync($"api/public/productionGroups/{guid}");
-        response.EnsureSuccessStatusCode();
+    public Task<List<ProductionGroup>> FindForProject(Guid projectGuid) =>
+        Client.Get<List<ProductionGroup>>($"api/public/productionGroups/forProject/{projectGuid}");
 
-        var content = await response.Content.ReadAsStringAsync();
-        return Serialization.Deserialize<ProductionGroup>(content);
-    }
-
-    public async Task<List<ProductionGroup>> FindForProject(Guid projectGuid)
-    {
-        var response = await Client.GetAsync($"api/public/productionGroups/forProject/{projectGuid}");
-        response.EnsureSuccessStatusCode();
-
-        var content = await response.Content.ReadAsStringAsync();
-        return Serialization.Deserialize<List<ProductionGroup>>(content);
-    }
-
-    public async Task Insert(ProductionGroup productionGroup)
-    {
-        var requestBody = Serialization.Serialize(productionGroup);
-        var requestContent = new StringContent(requestBody, Encoding.UTF8, "application/json");
-        var response = await Client.PostAsync("api/public/productionGroups", requestContent);
-        response.EnsureSuccessStatusCode();
-    }
+    public Task Insert(ProductionGroup productionGroup) => Client.Post("api/public/productionGroups", productionGroup);
 }

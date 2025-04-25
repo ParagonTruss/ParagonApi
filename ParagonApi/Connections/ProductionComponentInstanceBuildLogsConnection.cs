@@ -1,36 +1,22 @@
 namespace ParagonApi.Connections;
 
-public class ProductionComponentInstanceBuildLogsConnection
+public class ProductionComponentInstanceBuildLogsConnection(HttpClient designServiceClient)
 {
-    private HttpClient Client { get; }
+    private HttpClient Client { get; } = designServiceClient;
 
-    public ProductionComponentInstanceBuildLogsConnection(HttpClient designServiceClient)
-    {
-        Client = designServiceClient;
-    }
-
-    public Task<List<ProductionComponentInstanceBuildLog>> FindByProductionComponentInstanceGuid(
+    public Task<List<ProductionComponentInstanceBuildLog>> FindByProductionComponentIstanceGuid(
         Guid productionComponentInstanceGuid
     ) => FindByProductionComponentInstanceGuids(new List<Guid> { productionComponentInstanceGuid });
 
-    public async Task<List<ProductionComponentInstanceBuildLog>> FindByProductionComponentInstanceGuids(
+    public Task<List<ProductionComponentInstanceBuildLog>> FindByProductionComponentInstanceGuids(
         List<Guid> productionComponentInstanceGuids
-    )
-    {
-        var requestBody = Serialization.Serialize(productionComponentInstanceGuids);
-        var requestContent = new StringContent(requestBody, Encoding.UTF8, "application/json");
-        var response = await Client.PostAsync(
+    ) =>
+        Client.Post<List<Guid>, List<ProductionComponentInstanceBuildLog>>(
             "api/public/productionComponentInstanceBuildLogs/getBuildLogsForProductionComponentInstances",
-            requestContent
+            productionComponentInstanceGuids
         );
 
-        response.EnsureSuccessStatusCode();
-
-        var content = await response.Content.ReadAsStringAsync();
-        return Serialization.Deserialize<List<ProductionComponentInstanceBuildLog>>(content);
-    }
-
-    public async Task<List<ProductionComponentInstanceBuildLog>> FindByStationGuid(
+    public Task<List<ProductionComponentInstanceBuildLog>> FindByStationGuid(
         Guid stationGuid,
         DateTime? startDateInclusive,
         DateTime? endDateInclusive
@@ -44,16 +30,13 @@ public class ProductionComponentInstanceBuildLogsConnection
             startDateInclusive.HasValue || endDateInclusive.HasValue
                 ? $"?{startDateQueryString ?? ""}{(startDateInclusive.HasValue && endDateInclusive.HasValue ? "&" : "")}{endDateQueryString ?? ""}"
                 : "";
-        var response = await Client.GetAsync(
+
+        return Client.Get<List<ProductionComponentInstanceBuildLog>>(
             $"api/public/productionComponentInstanceBuildLogs/byStationGuid/{stationGuid}{queryString}"
         );
-        response.EnsureSuccessStatusCode();
-
-        var content = await response.Content.ReadAsStringAsync();
-        return Serialization.Deserialize<List<ProductionComponentInstanceBuildLog>>(content);
     }
 
-    public async Task<ProductionMetrics> GetCompletedMetricsForStation(
+    public Task<ProductionMetrics> GetCompletedMetricsForStation(
         Guid stationGuid,
         DateTime? startDateInclusive,
         DateTime? endDateInclusive
@@ -67,60 +50,43 @@ public class ProductionComponentInstanceBuildLogsConnection
             startDateInclusive.HasValue || endDateInclusive.HasValue
                 ? $"?{startDateQueryString ?? ""}{(startDateInclusive.HasValue && endDateInclusive.HasValue ? "&" : "")}{endDateQueryString ?? ""}"
                 : "";
-        var response = await Client.GetAsync(
+
+        return Client.Get<ProductionMetrics>(
             $"api/public/productionComponentInstanceBuildLogs/completedMetricsByStationGuid/{stationGuid}{queryString}"
         );
-        response.EnsureSuccessStatusCode();
-
-        var content = await response.Content.ReadAsStringAsync();
-        return Serialization.Deserialize<ProductionMetrics>(content);
     }
 
-    public async Task SetStartProduction(
+    public Task SetStartProduction(
         Guid productionComponentInstanceGuid,
         Guid stationGuid,
         DateTime startProduction,
         bool enableOverwrite
-    )
-    {
-        var requestBody = Serialization.Serialize(
-            new
+    ) =>
+        Client.Post(
+            "api/public/productionComponentInstanceBuildLogs/setStartProduction",
+            new SetStartProductionRequest
             {
-                productionComponentInstanceGuid,
-                stationGuid,
-                startProduction,
-                enableOverwrite,
+                ProductionComponentInstanceGuid = productionComponentInstanceGuid,
+                StationGuid = stationGuid,
+                StartProduction = startProduction,
+                EnableOverwrite = enableOverwrite,
             }
         );
-        var requestContent = new StringContent(requestBody, Encoding.UTF8, "application/json");
-        var response = await Client.PostAsync(
-            "api/public/productionComponentInstanceBuildLogs/setStartProduction",
-            requestContent
-        );
-        response.EnsureSuccessStatusCode();
-    }
 
-    public async Task SetEndProduction(
+    public Task SetEndProduction(
         Guid productionComponentInstanceGuid,
         Guid stationGuid,
         DateTime endProduction,
         bool enableOverwrite
-    )
-    {
-        var requestBody = Serialization.Serialize(
-            new
+    ) =>
+        Client.Post(
+            "api/public/productionComponentInstanceBuildLogs/setEndProduction",
+            new SetEndProductionRequest
             {
-                productionComponentInstanceGuid,
-                stationGuid,
-                endProduction,
-                enableOverwrite,
+                ProductionComponentInstanceGuid = productionComponentInstanceGuid,
+                StationGuid = stationGuid,
+                EndProduction = endProduction,
+                EnableOverwrite = enableOverwrite,
             }
         );
-        var requestContent = new StringContent(requestBody, Encoding.UTF8, "application/json");
-        var response = await Client.PostAsync(
-            "api/public/productionComponentInstanceBuildLogs/setEndProduction",
-            requestContent
-        );
-        response.EnsureSuccessStatusCode();
-    }
 }

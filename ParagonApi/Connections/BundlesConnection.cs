@@ -1,54 +1,18 @@
 namespace ParagonApi.Connections;
 
-public class BundlesConnection
+public class BundlesConnection(HttpClient designServiceClient)
 {
-    private HttpClient Client { get; }
+    private HttpClient Client { get; } = designServiceClient;
 
-    public BundlesConnection(HttpClient designServiceClient)
-    {
-        Client = designServiceClient;
-    }
+    public Task<Bundle> Find(Guid guid) => Client.Get<Bundle>($"api/public/bundles/{guid}");
 
-    public async Task<Bundle> Find(Guid guid)
-    {
-        var response = await Client.GetAsync($"api/public/bundles/{guid}");
-        response.EnsureSuccessStatusCode();
+    public Task<List<Bundle>> FindForProductionGroup(Guid productionGroupGuid) =>
+        Client.Get<List<Bundle>>($"api/public/bundles/forProductionGroup/{productionGroupGuid}");
 
-        var content = await response.Content.ReadAsStringAsync();
-        return Serialization.Deserialize<Bundle>(content);
-    }
+    public Task<Bundle> Insert(Bundle bundle) => Client.Post<Bundle, Bundle>("api/public/bundles", bundle);
 
-    public async Task<List<Bundle>> FindForProductionGroup(Guid productionGroupGuid)
-    {
-        var response = await Client.GetAsync($"api/public/bundles/forProductionGroup/{productionGroupGuid}");
-        response.EnsureSuccessStatusCode();
+    public Task Delete(Guid bundleGuid) => Client.Delete($"api/public/bundles/{bundleGuid}");
 
-        var content = await response.Content.ReadAsStringAsync();
-        return Serialization.Deserialize<List<Bundle>>(content);
-    }
-
-    public async Task<Bundle> Insert(Bundle bundle)
-    {
-        var requestBody = Serialization.Serialize(bundle);
-        var requestContent = new StringContent(requestBody, Encoding.UTF8, "application/json");
-        var response = await Client.PostAsync("api/public/bundles", requestContent);
-        response.EnsureSuccessStatusCode();
-
-        var content = await response.Content.ReadAsStringAsync();
-        return Serialization.Deserialize<Bundle>(content);
-    }
-
-    public async Task Delete(Guid bundleGuid)
-    {
-        var response = await Client.DeleteAsync($"api/public/bundles/{bundleGuid}");
-        response.EnsureSuccessStatusCode();
-    }
-
-    public async Task FinishComponentsForBundles(List<Guid> bundleGuids)
-    {
-        var requestBody = Serialization.Serialize(bundleGuids);
-        var requestContent = new StringContent(requestBody, Encoding.UTF8, "application/json");
-        var response = await Client.PostAsync("api/public/bundles/finishComponentsForBundles", requestContent);
-        response.EnsureSuccessStatusCode();
-    }
+    public Task FinishComponentsForBundles(List<Guid> bundleGuids) =>
+        Client.Post("api/public/bundles/finishComponentsForBundles", bundleGuids);
 }

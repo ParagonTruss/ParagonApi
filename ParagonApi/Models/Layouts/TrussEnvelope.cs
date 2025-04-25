@@ -16,6 +16,8 @@ public class TrussEnvelope : NewTrussEnvelope
 {
     public Guid Guid { get; set; }
     public required Guid? ComponentDesignGuid { get; set; }
+    public required Point3D? BackLeftPoint { get; set; }
+    public required Point3D? BackRightPoint { get; set; }
 }
 
 public enum BevelCutType

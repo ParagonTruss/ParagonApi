@@ -1,21 +1,8 @@
 ﻿namespace ParagonApi.Connections;
 
-public class AnalysisSetsConnection
+public class AnalysisSetsConnection(HttpClient designServiceClient)
 {
-    private HttpClient Client { get; }
+    private HttpClient Client { get; } = designServiceClient;
 
-    public AnalysisSetsConnection(HttpClient designServiceClient)
-    {
-        Client = designServiceClient;
-    }
-
-    public async Task<AnalysisSet> Get(Guid guid)
-    {
-        var response = await Client.GetAsync($"api/public/analysisSets/{guid}");
-        response.EnsureSuccessStatusCode();
-
-        var content = await response.Content.ReadAsStringAsync();
-
-        return Serialization.Deserialize<AnalysisSet>(content);
-    }
+    public Task<AnalysisSet> Get(Guid guid) => Client.Get<AnalysisSet>($"api/public/analysisSets/{guid}");
 }

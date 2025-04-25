@@ -1,43 +1,21 @@
 namespace ParagonApi.Connections;
 
-public class ScheduleLineGroupsConnection
+public class ScheduleLineGroupsConnection(HttpClient designServiceClient)
 {
-    private HttpClient Client { get; }
+    private HttpClient Client { get; } = designServiceClient;
 
-    public ScheduleLineGroupsConnection(HttpClient designServiceClient)
-    {
-        Client = designServiceClient;
-    }
+    public Task<List<ScheduleLineGroup>> GetActiveScheduleLineGroupsByStation(Guid stationGuid) =>
+        Client.Get<List<ScheduleLineGroup>>(
+            $"/api/public/scheduleLineGroups/getActiveScheduleLineGroupsByStation/{stationGuid}"
+        );
 
-    public async Task<List<ScheduleLineGroup>> GetActiveScheduleLineGroupsByStation(Guid stationGuid)
-    {
-        var url = $"/api/public/scheduleLineGroups/getActiveScheduleLineGroupsByStation/{stationGuid}";
-        var response = await Client.GetAsync(url);
-        response.EnsureSuccessStatusCode();
-
-        var responseContent = await response.Content.ReadAsStringAsync();
-        return Serialization.Deserialize<List<ScheduleLineGroup>>(responseContent);
-    }
-
-    public async Task<ScheduleLineGroupData> GetScheduleLineGroupData(Guid scheduleLineGroupGuid)
-    {
-        var response = await Client.GetAsync(
+    public Task<ScheduleLineGroupData> GetScheduleLineGroupData(Guid scheduleLineGroupGuid) =>
+        Client.Get<ScheduleLineGroupData>(
             $"api/public/scheduleLineGroups/{scheduleLineGroupGuid}/getScheduleLineGroupData"
         );
 
-        response.EnsureSuccessStatusCode();
-
-        var content = await response.Content.ReadAsStringAsync();
-        return Serialization.Deserialize<ScheduleLineGroupData>(content);
-    }
-
-    public async Task<FloorChordProductionDetail> GetFloorChordMemberProductionDetail(Guid scheduleLineGroupGuid)
-    {
-        var url = $"/api/public/scheduleLineGroups/{scheduleLineGroupGuid}/getFloorChordMemberProductionDetail";
-        var response = await Client.GetAsync(url);
-        response.EnsureSuccessStatusCode();
-
-        var responseContent = await response.Content.ReadAsStringAsync();
-        return Serialization.Deserialize<FloorChordProductionDetail>(responseContent);
-    }
+    public Task<FloorChordProductionDetail> GetFloorChordMemberProductionDetail(Guid scheduleLineGroupGuid) =>
+        Client.Get<FloorChordProductionDetail>(
+            $"/api/public/scheduleLineGroups/{scheduleLineGroupGuid}/getFloorChordMemberProductionDetail"
+        );
 }
