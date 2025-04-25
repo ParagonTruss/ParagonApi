@@ -7,7 +7,7 @@
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
-    <Version>11.2.0</Version>
+    <Version>11.3.0</Version>
     <Authors>Paragon Component Systems, LLC</Authors>
     <Company>Paragon Component Systems, LLC</Company>
   </PropertyGroup>

@@ -1,4 +1,6 @@
-﻿namespace ParagonApi.Models;
+﻿using ParagonApi.Models.AnalogModels;
+
+namespace ParagonApi.Models;
 
 public class AnalysisSet
 {
@@ -8,4 +10,6 @@ public class AnalysisSet
     public required double? RequiredSlopedTopChordPurlinSpacing { get; set; }
     public required double? RequiredFlatTopChordPurlinSpacing { get; set; }
     public required double? RequiredBottomChordPurlinSpacing { get; set; }
+
+    public required AnalogModel AnalogModel { get; set; }
 }
