@@ -6,6 +6,9 @@ public class TrussesConnection(HttpClient designServiceClient)
 
     public Task<Truss> Find(Guid guid) => Client.Get<Truss>($"api/public/trusses/{guid}");
 
+    public Task<Dictionary<Guid, string>> GetNames(List<Guid> guids) =>
+        Client.Post<List<Guid>, Dictionary<Guid, string>>("api/public/trusses/names", guids);
+
     public Task<UploadFilesResult> Upload(BinaryUploadFile file) =>
         Client.Post<List<Base64File>, UploadFilesResult>("/api/public/trusses/uploadFiles", [file.ToBase64File()]);
 

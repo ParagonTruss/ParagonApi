@@ -10,7 +10,6 @@ public class ScheduleLineGroup
     /// Should a <see cref="ScheduleLineGroup"/> not be associated with any bundles, it should still be associated
     /// with an organization.
     /// </summary>
-
     public required string Organization { get; set; }
 
     public required Guid LineGuid { get; set; }

@@ -1,19 +1,27 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net9.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
     <LangVersion>13.0</LangVersion>
     <ImplicitUsings>true</ImplicitUsings>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-
-    <Version>11.3.0</Version>
+    <Version>11.5.0</Version>
     <Authors>Paragon Component Systems, LLC</Authors>
-    <Company>Paragon Component Systems, LLC</Company>
+    <Description>Paragon API Client Library</Description>
+    <Copyright>Copyright (c) Paragon Component Systems, LLC 2025</Copyright>
+    <PackageProjectUrl>https://github.com/ParagonTruss/ParagonApi</PackageProjectUrl>
+    <PackageIcon>ParagonLogo.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/ParagonTruss/ParagonApi</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Tags>paragon, api</Tags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="9.0.4" />
+    <None Include="ParagonLogo.png" Pack="true" PackagePath="\" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
-
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
 </Project>
