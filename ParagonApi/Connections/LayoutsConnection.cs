@@ -13,6 +13,12 @@ public class LayoutsConnection(HttpClient designServiceClient)
     public Task<RoofPlane> CreateRoofPlane(Guid projectGuid, NewRoofPlane roofPlane) =>
         Client.Post<NewRoofPlane, RoofPlane>($"api/public/projects/{projectGuid}/roofPlanes", roofPlane);
 
+    public Task<List<RoofPlane>> CreateRoofPlanesFromPolygons(Guid projectGuid, List<Polygon3D> polygons) =>
+        Client.Post<List<Polygon3D>, List<RoofPlane>>(
+            $"api/public/projects/{projectGuid}/roofPlanes/fromPolygons",
+            polygons
+        );
+
     public Task<RoofPlane> UpdateRoofPlane(Guid projectGuid, RoofPlane roofPlane) =>
         Client.Put<RoofPlane, RoofPlane>($"api/public/projects/{projectGuid}/roofPlanes", roofPlane);
 
