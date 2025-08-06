@@ -13,6 +13,8 @@ public class NewTrussEnvelope
     public BevelCut? LeftBevelCut { get; set; }
     public BevelCut? RightBevelCut { get; set; }
     public Guid? RoofContainerGuid { get; set; }
+    public List<TopOrBottomCut> TopCuts { get; set; } = [];
+    public List<TopOrBottomCut> BottomCuts { get; set; } = [];
 }
 
 public class TrussEnvelope : NewTrussEnvelope
@@ -32,4 +34,19 @@ public class BevelCut
 {
     public required BevelCutType Type { get; set; }
     public required double Angle { get; set; }
+}
+
+public enum TopOrBottomCutType
+{
+    Absolute,
+    RoofPlane,
+    CeilingPlane,
+}
+
+public class TopOrBottomCut
+{
+    public required TopOrBottomCutType Type { get; set; }
+    public Plane3D? Plane { get; set; }
+    public Guid RoofPlaneGuid { get; set; }
+    public Guid CeilingPlaneGuid { get; set; }
 }
