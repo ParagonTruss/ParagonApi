@@ -14,6 +14,7 @@ public class Paragon : IDisposable
     public ProjectsConnection Projects { get; }
     public LayoutsConnection Layouts { get; }
     public AnalysisSetsConnection AnalysisSets { get; }
+    public AssemblyGroupsConnection AssemblyGroups { get; }
 
     public JobsConnection Jobs { get; }
 
@@ -43,6 +44,7 @@ public class Paragon : IDisposable
         Projects = new ProjectsConnection(DesignServiceClient);
         Layouts = new LayoutsConnection(DesignServiceClient);
         AnalysisSets = new AnalysisSetsConnection(DesignServiceClient);
+        AssemblyGroups = new AssemblyGroupsConnection(DesignServiceClient);
 
         Jobs = new JobsConnection(SealingServiceClient);
     }

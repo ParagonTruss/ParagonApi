@@ -325,7 +325,22 @@ public enum RoofShape
 
 public enum ActiveSnowLoad
 {
-    Ground,
+    /// <summary>
+    /// Ground snow loads calibrated for LRFD design, which must be multiplied by 0.7 for ASD design.
+    /// p_g in ASCE 7-22 and the 2024 IBC.
+    /// </summary>
+    UltimateGround,
+
+    /// <summary>
+    /// Ground snow loads calibrated for ASD design.
+    /// p_g(asd) in the 2024 IBC/IRC (conversion formula given in IBC Section 1608.2.1).
+    /// p_g in ASCE 7 and the IBC/IRC prior to ASCE 7-22.
+    /// </summary>
+    AsdGround,
+
+    /// <summary>
+    /// p_f in ASCE 7 and the IBC.
+    /// </summary>
     Roof,
 }
 

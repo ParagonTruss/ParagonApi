@@ -8,5 +8,5 @@ public class NewProject
 public class Project : NewProject
 {
     public Guid Guid { get; set; }
-    public required List<Guid> ComponentDesignGuids { get; set; }
+    public List<Guid> ComponentDesignGuids { get; set; } = [];
 }

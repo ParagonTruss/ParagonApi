@@ -8,6 +8,9 @@ public class ProjectsConnection(HttpClient designServiceClient)
 
     public Task<Project> Get(Guid guid) => Client.Get<Project>($"api/public/projects/{guid}");
 
+    public Task<ProjectSummaryData> GetSummaryData(Guid guid, ProjectSummaryDataRequest request) =>
+        Client.Post<ProjectSummaryDataRequest, ProjectSummaryData>($"api/public/projects/{guid}/summaryData", request);
+
     public Task<Project> Create(NewProject project) => Client.Post<NewProject, Project>("api/public/projects", project);
 
     public Task<UploadFilesResult> UploadFiles(Guid projectGuid, List<BinaryUploadFile> files) =>

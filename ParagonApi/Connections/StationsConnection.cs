@@ -85,6 +85,11 @@ public class StationsConnection(HttpClient designServiceClient)
             new OrderStationComponentDesignRequest { OrderedStationComponentDesigns = orderedStationComponentDesigns }
         );
 
+    public Task UpdateComponentDesignQuantity(Guid stationGuid, Guid componentDesignGuid, int newQuantity) =>
+        Client.Patch(
+            $"/api/public/stations/{stationGuid}/componentDesign/{componentDesignGuid}/updateQuantity/{newQuantity}"
+        );
+
     public Task Clear(Guid stationGuid) => Client.Delete($"/api/public/stations/{stationGuid}/componentDesigns/");
 
     public Task SetCurrentProductionComponentInstanceGuid(
