@@ -32,4 +32,7 @@ public class AssemblyGroupsConnection(HttpClient designServiceClient)
             $"/api/public/assemblyGroups/{assemblyGroupGuid}/componentDesigns",
             componentDesigns
         );
+
+    public Task SendToStation(Guid assemblyGroupGuid, SendToStationRequest request) =>
+        Client.Post($"/api/public/assemblyGroups/{assemblyGroupGuid}/sendToStation", request);
 }

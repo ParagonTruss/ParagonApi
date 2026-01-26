@@ -23,6 +23,9 @@ public class ScheduleLineGroup
     /// <summary>
     /// Optionally set a date for production for the <see cref="ScheduleLineGroup"/>. For organizations that just
     /// want a ranked list (like Clearspan), this field will go unused.
+    ///
+    /// You should only use the date portion of this value. The DateTime type supports netstandard2.0. If you are using
+    /// .NET 6+, you can convert this to a DateOnly type.
     /// </summary>
-    public required DateTime? ScheduledDate { get; set; } // TODO change to DateOnly in C# 10
+    public required DateTime? ScheduledDate { get; set; }
 }
