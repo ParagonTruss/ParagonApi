@@ -40,6 +40,20 @@ internal static class ConnectionUtilities
         return await DeserializeResponse<TResponse>(response);
     }
 
+    internal static async Task<HttpResponseMessage> PostRawResponse<TRequest>(
+        this HttpClient client,
+        string url,
+        TRequest requestBody
+    )
+    {
+        var requestContent = CreateSerializedContent(requestBody);
+
+        var response = await client.PostAsync(url, requestContent);
+        response.EnsureSuccessStatusCode();
+
+        return response;
+    }
+
     internal static async Task Put<TRequest>(this HttpClient client, string url, TRequest requestBody)
     {
         var requestContent = CreateSerializedContent(requestBody);

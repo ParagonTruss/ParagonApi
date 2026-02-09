@@ -5,10 +5,10 @@
     <ImplicitUsings>true</ImplicitUsings>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>14.1.0</Version>
+    <Version>14.2.0</Version>
     <Authors>Paragon Component Systems, LLC</Authors>
     <Description>Paragon API Client Library</Description>
-    <Copyright>Copyright (c) Paragon Component Systems, LLC 2025</Copyright>
+    <Copyright>Copyright (c) Paragon Component Systems, LLC 2026</Copyright>
     <PackageProjectUrl>https://github.com/ParagonTruss/ParagonApi</PackageProjectUrl>
     <PackageIcon>ParagonLogo.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>

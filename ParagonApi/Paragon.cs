@@ -5,6 +5,7 @@ public class Paragon : IDisposable
     public UsageDataConnection UsageData { get; }
     public StationsConnection Stations { get; }
     public TrussesConnection Trusses { get; }
+    public ComponentDesignDownloadsConnection ComponentDesignDownloads { get; }
     public BatchesConnection Batches { get; }
     public BundlesConnection Bundles { get; }
     public ProductionComponentInstancesConnection ProductionComponentInstances { get; }
@@ -35,6 +36,7 @@ public class Paragon : IDisposable
         UsageData = new UsageDataConnection(DesignServiceClient);
         Stations = new StationsConnection(DesignServiceClient);
         Trusses = new TrussesConnection(DesignServiceClient);
+        ComponentDesignDownloads = new ComponentDesignDownloadsConnection(DesignServiceClient);
         Batches = new BatchesConnection(DesignServiceClient);
         Bundles = new BundlesConnection(DesignServiceClient);
         ProductionComponentInstances = new ProductionComponentInstancesConnection(DesignServiceClient);
