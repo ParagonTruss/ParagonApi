@@ -4,7 +4,7 @@ public class ProductionComponentInstanceBuildLogsConnection(HttpClient designSer
 {
     private HttpClient Client { get; } = designServiceClient;
 
-    public Task<List<ProductionComponentInstanceBuildLog>> FindByProductionComponentIstanceGuid(
+    public Task<List<ProductionComponentInstanceBuildLog>> FindByProductionComponentInstanceGuid(
         Guid productionComponentInstanceGuid
     ) => FindByProductionComponentInstanceGuids(new List<Guid> { productionComponentInstanceGuid });
 

@@ -24,6 +24,9 @@ public class TrussesConnection(HttpClient designServiceClient)
     public Task<AnalysisSet> UpgradeAndAnalyze(Guid guid) =>
         Client.PostNoContent<AnalysisSet>($"/api/public/trusses/{guid}/upgradeAndAnalyze");
 
+    public Task<Guid?> GetMostRecentAnalysisSetGuid(Guid guid) =>
+        Client.Get<Guid?>($"/api/public/trusses/{guid}/mostRecentAnalysisSetGuid");
+
     public Task<Truss> CreateProfileTruss(Guid projectGuid, Profile profile) =>
         Client.Post<Profile, Truss>($"api/public/projects/{projectGuid}/createProfileTruss", profile);
 }
