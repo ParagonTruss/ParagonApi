@@ -24,6 +24,8 @@ public enum PlateGeometryType
     /// rectangle sliced at a 45-degree angle through the bottom right point when viewed unrotated.
     /// </summary>
     BevelPlateRightHanded = 3,
+
+    Hinged = 4,
 }
 
 public class Plate
@@ -42,9 +44,17 @@ public class Plate
 
     public required PlateOrientation Orientation { get; set; }
 
+    /// <summary>
+    /// Plate length direction, which is usually parallel to the slots.
+    /// </summary>
     public required Direction3D SlotDirection { get; set; }
 
     public required Direction3D NormalDirection { get; set; }
 
     public PlateGeometryType GeometryType { get; set; }
+
+    /// <summary>
+    /// The length direction of the other side of the hinge plate.
+    /// </summary>
+    public Direction3D? HingeDirection { get; set; }
 }

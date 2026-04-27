@@ -4,6 +4,7 @@ public enum BoundaryType
 {
     Unrestrained,
     HorizontalRoller,
+    HorizontalRollerWithUpwardRelease,
     VerticalRoller,
     Pinned,
     Fixed,
