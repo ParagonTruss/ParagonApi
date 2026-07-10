@@ -24,4 +24,16 @@ public class ProjectsConnection(HttpClient designServiceClient)
 
     public Task<LoadSettings> UpdateLoadSettings(Guid projectGuid, LoadSettings loadSettings) =>
         Client.Put<LoadSettings, LoadSettings>($"api/public/projects/{projectGuid}/loadSettings", loadSettings);
+
+    public Task<List<TrussGroup>> GetTrussGroups(Guid projectGuid) =>
+        Client.Get<List<TrussGroup>>($"api/public/projects/{projectGuid}/trussGroups");
+
+    public Task<TrussGroup> CreateTrussGroup(Guid projectGuid, NewTrussGroup newTrussGroup) =>
+        Client.Post<NewTrussGroup, TrussGroup>($"api/public/projects/{projectGuid}/trussGroups", newTrussGroup);
+
+    public Task UpdateTrussGroup(Guid projectGuid, TrussGroup trussGroup) =>
+        Client.Put($"api/public/projects/{projectGuid}/trussGroups", trussGroup);
+
+    public Task DeleteTrussGroups(Guid projectGuid, List<Guid> trussGroupGuids) =>
+        Client.Delete($"api/public/projects/{projectGuid}/trussGroups", trussGroupGuids);
 }

@@ -74,4 +74,7 @@ public enum DownloadMachineryTrsRequestMemberTypes
 public class DownloadMachineryTrsRequest : DownloadRequest
 {
     public required DownloadMachineryTrsRequestMemberTypes MemberType { get; set; }
+
+    public double? MaxMemberLengthInInches { get; set; }
+    public bool? IncludeMembersLongerThanMaxLengthInSeparateFile { get; set; }
 }

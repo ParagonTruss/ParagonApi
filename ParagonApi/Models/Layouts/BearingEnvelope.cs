@@ -1,4 +1,4 @@
-﻿namespace ParagonApi.Models;
+namespace ParagonApi.Models;
 
 public class NewBearingEnvelope
 {
@@ -6,6 +6,9 @@ public class NewBearingEnvelope
     public required Point2D LeftPoint { get; set; }
     public required Point2D RightPoint { get; set; }
     public required double Thickness { get; set; }
+    public required int NumberOfPlies { get; set; }
+    public required BearingEnvelopeType BearingType { get; set; }
+    public required BeamOrientation BeamOrientation { get; set; }
     public required double Top { get; set; }
     public required double Bottom { get; set; }
     public required Justification Justification { get; set; }

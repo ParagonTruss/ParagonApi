@@ -114,6 +114,14 @@ internal static class ConnectionUtilities
         response.EnsureSuccessStatusCode();
     }
 
+    internal static async Task Delete<TRequest>(this HttpClient client, string url, TRequest requestBody)
+    {
+        var requestContent = CreateSerializedContent(requestBody);
+        var request = new HttpRequestMessage(HttpMethod.Delete, url) { Content = requestContent };
+        var response = await client.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+    }
+
     private static StringContent CreateSerializedContent<TRequest>(TRequest requestBody)
     {
         var serializedBody = Serialization.Serialize(requestBody);
