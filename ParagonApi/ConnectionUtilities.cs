@@ -32,6 +32,12 @@ internal static class ConnectionUtilities
         return await DeserializeResponse<TResponse>(response);
     }
 
+    internal static async Task PostNoContent(this HttpClient client, string url)
+    {
+        var response = await client.PostAsync(url, content: null);
+        response.EnsureSuccessStatusCode();
+    }
+
     internal static async Task<TResponse> PostNoContent<TResponse>(this HttpClient client, string url)
     {
         var response = await client.PostAsync(url, content: null);
@@ -112,6 +118,14 @@ internal static class ConnectionUtilities
     {
         var response = await client.DeleteAsync(url);
         response.EnsureSuccessStatusCode();
+    }
+
+    internal static async Task<TResponse> Delete<TResponse>(this HttpClient client, string url)
+    {
+        var response = await client.DeleteAsync(url);
+        response.EnsureSuccessStatusCode();
+
+        return await DeserializeResponse<TResponse>(response);
     }
 
     internal static async Task Delete<TRequest>(this HttpClient client, string url, TRequest requestBody)

@@ -5,7 +5,7 @@
     <ImplicitUsings>true</ImplicitUsings>
     <Nullable>enable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <Version>15.0.0</Version>
+    <Version>15.1.0</Version>
     <Authors>Paragon Component Systems, LLC</Authors>
     <Description>Paragon API Client Library</Description>
     <Copyright>Copyright (c) Paragon Component Systems, LLC 2026</Copyright>
@@ -22,6 +22,6 @@
     <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="10.0.9" />
+    <PackageReference Include="System.Text.Json" Version="10.0.10" />
   </ItemGroup>
 </Project>

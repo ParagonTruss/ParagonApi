@@ -7,6 +7,7 @@ public enum BoundaryType
     HorizontalRollerWithUpwardRelease,
     VerticalRoller,
     Pinned,
+    PinnedWithUpwardRelease,
     Fixed,
     RotationFixed,
     XAndRotationFixed,

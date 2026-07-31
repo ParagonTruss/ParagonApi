@@ -266,6 +266,13 @@ public class LoadSettings
     public required bool? OneOrTwoFamilyDwelling { get; set; }
 
     public required bool UseFullStorageLoad { get; set; }
+
+    /// <summary>
+    /// IBC 1607.22.2 requires the 10 psf live load on the portions of the bottom chord without storage clearance to be
+    /// applied concurrently with the 20 psf storage load. Set this to opt out of that concurrency and apply the two
+    /// loads in separate load cases instead, which may produce a design that does not satisfy the building code.
+    /// </summary>
+    public bool ApplyReducedStorageLoadNonConcurrently { get; set; }
     #endregion
 }
 
