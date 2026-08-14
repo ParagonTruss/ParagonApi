@@ -32,8 +32,8 @@ public class Lumber
         return actualInches + .25;
     }
 
-    public required string Grade { get; set; }
-    public required string Species { get; set; }
+    public required LumberGrade Grade { get; set; }
+    public required LumberSpecies Species { get; set; }
     public required LumberStructure Structure { get; set; }
-    public required string TreatmentType { get; set; }
+    public required LumberTreatmentType TreatmentType { get; set; }
 }

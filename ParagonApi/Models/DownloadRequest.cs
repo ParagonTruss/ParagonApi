@@ -38,6 +38,15 @@ public class DownloadRequest
     /// do this, <see cref="GuidType"/> must be `AnalysisSet`, and those GUIDs must appear in the Shared Component Set.
     /// </summary>
     public string? SharedComponentSetLookupCode { get; set; }
+
+    /// <summary>
+    /// Optional map from the GUIDs in <see cref="GuidToQuantity"/> to the project each one belongs to. Downloads that
+    /// benefit from project context (e.g. Steel TRS / Truss D&amp;E) read that project's metadata for the file header,
+    /// and look up the linked truss envelope for the component design — used to populate fields like eave height.
+    /// A selection can span projects, so this is a map rather than a single guid. GUIDs left out of it are written
+    /// without project context.
+    /// </summary>
+    public Dictionary<Guid, Guid>? GuidToProjectGuid { get; set; }
 }
 
 public class DownloadMaterialReportRequest : DownloadRequest
