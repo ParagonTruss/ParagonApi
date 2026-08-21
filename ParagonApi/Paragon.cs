@@ -3,6 +3,7 @@ namespace ParagonApi;
 public class Paragon : IDisposable
 {
     public UsageDataConnection UsageData { get; }
+    public HangerPricesConnection HangerPrices { get; }
     public StationsConnection Stations { get; }
     public TrussesConnection Trusses { get; }
     public ComponentDesignDownloadsConnection ComponentDesignDownloads { get; }
@@ -37,6 +38,7 @@ public class Paragon : IDisposable
         DesignServiceClient.DefaultRequestHeaders.Authorization = jwtHeaderValue;
 
         UsageData = new UsageDataConnection(DesignServiceClient);
+        HangerPrices = new HangerPricesConnection(DesignServiceClient);
         Stations = new StationsConnection(DesignServiceClient);
         Trusses = new TrussesConnection(DesignServiceClient);
         ComponentDesignDownloads = new ComponentDesignDownloadsConnection(DesignServiceClient);

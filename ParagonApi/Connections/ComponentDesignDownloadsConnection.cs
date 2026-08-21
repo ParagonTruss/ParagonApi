@@ -25,6 +25,9 @@ public class ComponentDesignDownloadsConnection(HttpClient designServiceClient)
     public Task<HttpResponseMessage> MachineryTrsFile(DownloadMachineryTrsRequest downloadRequest) =>
         Client.PostRawResponse("api/public/trusses/download/machineryTrs", downloadRequest);
 
+    public Task<HttpResponseMessage> ShopDrawings(DownloadShopDrawingsRequest downloadRequest) =>
+        Client.PostRawResponse("api/public/trusses/download/shopDrawings", downloadRequest);
+
     public Task<HttpResponseMessage> ComponentReport(DownloadRequest downloadRequest) =>
         Client.PostRawResponse("api/public/trusses/download/componentReport", downloadRequest);
 

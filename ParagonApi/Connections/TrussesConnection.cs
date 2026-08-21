@@ -6,6 +6,9 @@ public class TrussesConnection(HttpClient designServiceClient)
 
     public Task<Truss> Find(Guid guid) => Client.Get<Truss>($"api/public/trusses/{guid}");
 
+    public Task<TrussPrice> GetPrice(Guid guid, TrussPriceRequest request) =>
+        Client.Post<TrussPriceRequest, TrussPrice>($"api/public/trusses/{guid}/price", request);
+
     public Task<Dictionary<Guid, string>> GetNames(List<Guid> guids) =>
         Client.Post<List<Guid>, Dictionary<Guid, string>>("api/public/trusses/names", guids);
 
