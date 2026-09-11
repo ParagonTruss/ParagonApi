@@ -209,16 +209,6 @@ public class LoadSettings
     /// In PSF
     /// </summary>
     public required double AtticCeilingDeadLoad { get; set; }
-
-    /// <summary>
-    /// In feet
-    /// </summary>
-    public required double AtticRoomWidth { get; set; }
-
-    /// <summary>
-    /// In feet
-    /// </summary>
-    public required double AtticRoomHeight { get; set; }
     #endregion
 
     #region Drag
