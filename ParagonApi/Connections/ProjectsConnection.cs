@@ -11,6 +11,9 @@ public class ProjectsConnection(HttpClient designServiceClient)
     public Task<ProjectSummaryData> GetSummaryData(Guid guid, ProjectSummaryDataRequest request) =>
         Client.Post<ProjectSummaryDataRequest, ProjectSummaryData>($"api/public/projects/{guid}/summaryData", request);
 
+    public Task<List<TrussQuantity>> GetTrussQuantities(Guid guid) =>
+        Client.Get<List<TrussQuantity>>($"api/public/projects/{guid}/trussQuantities");
+
     public Task<Project> Create(NewProject project) => Client.Post<NewProject, Project>("api/public/projects", project);
 
     public Task<UploadFilesResult> UploadFiles(Guid projectGuid, List<BinaryUploadFile> files) =>
