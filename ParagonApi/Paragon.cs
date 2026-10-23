@@ -4,6 +4,8 @@ public class Paragon : IDisposable
 {
     public UsageDataConnection UsageData { get; }
     public HangerPricesConnection HangerPrices { get; }
+    public LumberPricesConnection LumberPrices { get; }
+    public PlatePricesConnection PlatePrices { get; }
     public StationsConnection Stations { get; }
     public TrussesConnection Trusses { get; }
     public ComponentDesignDownloadsConnection ComponentDesignDownloads { get; }
@@ -39,6 +41,8 @@ public class Paragon : IDisposable
 
         UsageData = new UsageDataConnection(DesignServiceClient);
         HangerPrices = new HangerPricesConnection(DesignServiceClient);
+        LumberPrices = new LumberPricesConnection(DesignServiceClient);
+        PlatePrices = new PlatePricesConnection(DesignServiceClient);
         Stations = new StationsConnection(DesignServiceClient);
         Trusses = new TrussesConnection(DesignServiceClient);
         ComponentDesignDownloads = new ComponentDesignDownloadsConnection(DesignServiceClient);

@@ -34,7 +34,7 @@ public class Plate
 
     public required string Name { get; set; }
 
-    public required string Type { get; set; }
+    public required PlateType Type { get; set; }
 
     public required Point2D Center { get; set; }
 

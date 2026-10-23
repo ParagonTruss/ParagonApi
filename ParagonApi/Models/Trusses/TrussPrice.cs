@@ -27,7 +27,7 @@ public class TrussPrice
     /// <summary>
     /// The plate types which are missing a price
     /// </summary>
-    public required List<string> PlatesMissingPrices { get; set; }
+    public required List<PlateType> PlatesMissingPrices { get; set; }
 
     /// <summary>
     /// The lumber which is missing a price, by lumber abbreviation

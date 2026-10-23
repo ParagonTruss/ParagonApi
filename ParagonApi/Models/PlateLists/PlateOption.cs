@@ -3,14 +3,14 @@ namespace ParagonApi.Models;
 public class PlateOption
 {
     /// <summary>
-    /// The name of the plate type, e.g. "MT20".
+    /// The plate type, e.g. MT20.
     /// </summary>
-    public required string PlateType { get; set; }
+    public required PlateType PlateType { get; set; }
 
     /// <summary>
-    /// The names of the tangible plate types aggregated by a combo plate type. Empty for tangible plate types.
+    /// The tangible plate types aggregated by a combo plate type. Empty for tangible plate types.
     /// </summary>
-    public List<string> TangiblePlateTypesForComboPlateType { get; set; } = [];
+    public List<PlateType> TangiblePlateTypesForComboPlateType { get; set; } = [];
 
     /// <summary>
     /// The width of the plate in inches.
