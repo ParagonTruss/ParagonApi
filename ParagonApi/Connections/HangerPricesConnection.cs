@@ -22,8 +22,11 @@ public class HangerPricesConnection(HttpClient designServiceClient)
         Client.Post<NewHangerPrice, HangerPrice>("api/public/hangerPrices", newHangerPrice);
 
     public Task<List<HangerPrice>> BulkInsert(List<NewHangerPrice> newHangerPrices) =>
-        Client.Post<List<NewHangerPrice>, List<HangerPrice>>("api/public/hangerPrices/bulkInsert", newHangerPrices);
+        Client.Post<List<NewHangerPrice>, List<HangerPrice>>("api/public/hangerPrices/bulk", newHangerPrices);
 
     public Task<HangerPrice> Update(HangerPriceEdit hangerPriceEdit) =>
         Client.Put<HangerPriceEdit, HangerPrice>("api/public/hangerPrices", hangerPriceEdit);
+
+    public Task<List<HangerPrice>> BulkUpdate(List<HangerPriceEdit> hangerPriceEdits) =>
+        Client.Put<List<HangerPriceEdit>, List<HangerPrice>>("api/public/hangerPrices/bulk", hangerPriceEdits);
 }
