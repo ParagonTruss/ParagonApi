@@ -12,26 +12,19 @@ public class LumberSet
     public Guid Guid { get; set; }
 
     /// <summary>
-    /// The lumber species. <see cref="LumberSpecies.Combo"/> is not allowed here; use
-    /// <see cref="ComboSpecies"/> instead.
+    /// The lumber species. <see cref="LumberSpecies.Combo"/> is not allowed here; use <see cref="Combos"/> instead.
     /// </summary>
     public required List<LumberSpecies> Species { get; set; }
 
     /// <summary>
-    /// Each entry is a list of lumber species aggregated into a combo species.
-    /// </summary>
-    public List<List<LumberSpecies>> ComboSpecies { get; set; } = [];
-
-    /// <summary>
-    /// The lumber grades. <see cref="LumberGrade.Combo"/> is not allowed here; use <see cref="ComboGrades"/>
-    /// instead.
+    /// The lumber grades. <see cref="LumberGrade.Combo"/> is not allowed here; use <see cref="Combos"/> instead.
     /// </summary>
     public required List<LumberGrade> Grades { get; set; }
 
     /// <summary>
-    /// Each entry is a list of lumber grades aggregated into a combo grade.
+    /// The combo lumbers.
     /// </summary>
-    public List<List<LumberGrade>> ComboGrades { get; set; } = [];
+    public required List<LumberCombo> Combos { get; set; }
 
     /// <summary>
     /// The lumber treatment types.
