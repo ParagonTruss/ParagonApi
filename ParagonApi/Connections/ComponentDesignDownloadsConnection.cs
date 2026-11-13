@@ -42,4 +42,11 @@ public class ComponentDesignDownloadsConnection(HttpClient designServiceClient)
 
     public Task<HttpResponseMessage> TrussDesignDrawings(DownloadTrussDesignDrawingsRequest downloadRequest) =>
         Client.PostRawResponse("api/public/componentDesigns/download/trussDesignDrawings", downloadRequest);
+
+    public Task<HttpResponseMessage> QualityControlDiagrams(DownloadQualityControlDiagramsRequest downloadRequest) =>
+        Client.PostRawResponse("api/public/componentDesigns/download/qualityControlDiagrams", downloadRequest);
+
+    public Task<HttpResponseMessage> DigitalQualityControlFile(
+        DownloadDigitalQualityControlFileRequest downloadRequest
+    ) => Client.PostRawResponse("api/public/componentDesigns/download/digitalQualityControlFile", downloadRequest);
 }

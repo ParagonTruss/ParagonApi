@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace ParagonApi.Models;
 
 /// <summary>
@@ -152,4 +154,56 @@ public class DownloadTrussDesignDrawingsRequest : DownloadRequest
     /// <see cref="ProjectGuid"/>. The system repair template has no QR code, so leave this off for repair drawings.
     /// </summary>
     public bool ShareLayout { get; set; }
+}
+
+public class DownloadQualityControlDiagramsRequest : DownloadRequest
+{
+    public required QualityControlJointSelection JointSelection { get; set; }
+}
+
+/// <summary>
+/// Which joints to diagram, distinguished by a `type` property of either `jsiMinimum` or `platePairs`
+/// </summary>
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+[JsonDerivedType(typeof(JsiMinimumQualityControlJointSelection), "jsiMinimum")]
+[JsonDerivedType(typeof(PlatePairsQualityControlJointSelection), "platePairs")]
+public class QualityControlJointSelection
+{
+    /// <summary>
+    /// Not abstract only so that a missing `type` deserializes, and the server can reject it with a 400
+    /// </summary>
+    [JsonConstructor]
+    protected QualityControlJointSelection() { }
+}
+
+public class JsiMinimumQualityControlJointSelection : QualityControlJointSelection
+{
+    /// <summary>
+    /// Diagram the joints whose JSI is at least this ratio of capacity, from 0 to 1 (e.g. 0.8 for 80%)
+    /// </summary>
+    public required decimal JsiMinimum { get; set; }
+}
+
+public class PlatePairsQualityControlJointSelection : QualityControlJointSelection
+{
+    /// <summary>
+    /// Diagram the joints of these plate pairs
+    /// </summary>
+    public required List<Guid> PlatePairGuids { get; set; }
+}
+
+public class DownloadDigitalQualityControlFileRequest : DownloadRequest
+{
+    /// <summary>
+    /// The manufacturer whose plates are used in place of AnyPlate plates. Required if any component has AnyPlate
+    /// plates. Cannot be Any, Combo, or Cherokee Metal.
+    /// </summary>
+    public PlateManufacturer? AnyPlateManufacturer { get; set; }
+
+    /// <summary>
+    /// The manufacturer whose plate is used in place of each ComboPlate plate pair, keyed by plate pair GUID. Every
+    /// ComboPlate plate pair must have an entry, and it must be one of the manufacturers that plate pair allows, other
+    /// than Any or Combo.
+    /// </summary>
+    public Dictionary<Guid, PlateManufacturer>? ComboPlateManufacturersByPlatePairGuid { get; set; }
 }
